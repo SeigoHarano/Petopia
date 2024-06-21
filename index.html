@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petopia - Pet Care Provider Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Basics */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Layout */
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 20px 0;
+            border-bottom: 3px solid #0779e4;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        header nav ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        header nav ul li a:hover {
+            color: #0779e4;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 8px;
+    font-size: 16px;
+}
+
+input[type="submit"],
+button {
+    background-color: #0779e4;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: #333;
+}
+
+        .footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+        .footer a {
+            color: #0779e4;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+        }
+
+        .navigation-links button {
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-right: 10px; /* Optional: Adjust margin between buttons */
+        }
+
+        .navigation-links button:hover {
+            background: #0779e4;
+        }
+        
+        .hidden {
+    display: none;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+}
+
+.dashboard-section {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+    .header-content {
+        padding: 5px 0;
+    }
+    /* Adjust other styles as needed for smaller screens */
+}
+    </style>
+</head>
+<body>
+    <header>
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">
+                <img src="petopia.png" alt="Petopia Logo">
+                <h1>Petopia</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showRegistrationForm()">Register</a></li>
+                    <li><a href="#" onclick="showLoginForm()">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<style>
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        display: flex;
+        align-items: center;
+    }
+    
+    .logo img {
+        width: 40px; /* Adjust size as needed */
+        height: auto;
+        margin-right: 10px;
+    }
+</style>
+
+    <div class="container">
+        <div class="content">
+            <form id="registration-form" class="hidden" onsubmit="register(event)">
+                <h2>Register</h2>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="service-type">Service Type:</label>
+                    <select id="service-type" name="service-type" required>
+                        <option value="n/a">N/A</option>
+                        <option value="dog-walking">Dog Walking</option>
+                        <option value="pet-sitting">Pet Sitting</option>
+                        <option value="grooming">Grooming</option>
+                        <option value="training">Training</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="business-name">Business Name (if applicable):</label>
+                    <input type="text" id="business-name" name="business-name">
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Register">
+                </div>
+            </form>
+
+            <form id="login-form" class="hidden" onsubmit="login(event)">
+                <h2>Login</h2>
+                <div class="form-group">
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" name="login-email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="login-password" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Login">
+                </div>
+
+                <div class="form-group">
+                    <a href="#" onclick="showResetPassword()">Forgot Password?</a>
+                </div>
+            </form>
+
+            <div id="reset-password-form" class="hidden">
+                <h2>Reset Password</h2>
+                <div class="form-group">
+                    <label for="reset-email">Email:</label>
+                    <input type="email" id="reset-email" name="reset-email" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Reset Password" onclick="resetPassword()">
+                    <button type="button" onclick="cancelResetPassword()">Cancel</button>
+                </div>
+
+                <div id="reset-password-feedback" class="hidden">
+                    <!-- Feedback for reset password status -->
+                </div>
+            </div>
+
+            <div id="dashboard" class="hidden">
+                <div class="dashboard-message">Welcome to your Dashboard!</div>
+                <button class="logout-button" onclick="logout()">Logout</button>
+
+                <div class="overview">
+                    <h2>Overview</h2>
+                    <div class="quick-stats">
+                        <h3>Quick Stats</h3>
+                        <p><strong>Number of Upcoming Appointments:</strong> <span id="upcoming-appointments">5</span></p>
+                        <p><strong>Completed Services:</strong> <span id="completed-services">10</span></p>
+                    </div>
+                </div>
+
+                <div class="navigation-links">
+                    <button type="button" onclick="showSchedule()">View Schedule</button>
+                    <button type="button" onclick="showServiceRequests()">Service Requests</button>
+                    <button type="button" onclick="showMyServices()">My Services</button>
+                    <button type="button" onclick="showFeedbackForm()">Give Feedback</button>
+                </div>
+
+                <div id="schedule-view" class="hidden">
+    <h2>Schedule View</h2>
+
+    <div class="filters">
+        <h3>Filter:</h3>
+        <select id="filter-select">
+            <option value="date">By Date</option>
+            <option value="service-type">By Service Type</option>
+        </select>
+        <button type="button" onclick="applyFilter()">Filter</button>
+    </div>
+
+    <div class="date-filter hidden">
+        <label for="date-filter">Filter by Date:</label>
+        <input type="date" id="date-filter" name="date-filter">
+    </div>
+
+    <div class="service-type-filter hidden">
+        <label for="service-type-filter">Filter by Service Type:</label>
+        <select id="service-type-filter" name="service-type-filter">
+            <option value="">All</option>
+            <option value="dog-walking">Dog Walking</option>
+            <option value="pet-sitting">Pet Sitting</option>
+            <option value="grooming">Grooming</option>
+            <option value="training">Training</option>
+        </select>
+    </div>
+
+    <div class="appointment-details">
+        <h2>Appointment Details:</h2>
+        <ul>
+            <li><strong>Pet Name:</strong> <span id="pet-name">Max</span></li>
+            <li><strong>Owner's Name:</strong> <span id="owner-name">John Doe</span></li>
+            <li><strong>Service Type:</strong> <span id="appointment-service-type">Dog Walking</span></li>
+            <li><strong>Date and Time:</strong> <span id="appointment-date">June 25, 2024</span>, <span id="appointment-time">10:00 AM</span></li>
+            <li><strong>Special Instructions:</strong> <span id="appointment-notes">Please walk Max around the park.</span></li>
+        </ul>
+
+        <div class="actions">
+            <button type="button" onclick="markAsCompleted()">Mark as Completed</button>
+            <button type="button" onclick="reschedule()">Reschedule</button>
+            <button type="button" onclick="cancelAppointment()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+                <div id="service-requests" class="hidden">
+                    <h2>Service Requests</h2>
+                    <div class="request">
+                        <p><strong>Request ID:</strong> <span id="request-id">123456</span></p>
+                        <p><strong>Service Type:</strong> <span id="request-service-type">Pet Sitting</span></p>
+                        <p><strong>Date Requested:</strong> <span id="request-date">June 30, 2024</span></p>
+                        <p><strong>Status:</strong> <span id="request-status">Pending</span></p>
+                        <button onclick="approveRequest()">Approve</button>
+                        <button onclick="rejectRequest()">Reject</button>
+                    </div>
+                </div>
+
+                <div id="my-services" class="hidden">
+                    <h2>My Services</h2>
+                    <div class="service">
+                        <p><strong>Service ID:</strong> <span id="service-id">789012</span></p>
+                        <p><strong>Service Type:</strong> <span id="service-type">Grooming</span></p>
+                        <p><strong>Date Scheduled:</strong> <span id="service-date">July 5, 2024</span></p>
+                        <p><strong>Status:</strong> <span id="service-status">Completed</span></p>
+                    </div>
+                </div>
+
+                <div id="feedback-form" class="hidden">
+                    <h2>Give Feedback</h2>
+                    <form onsubmit="submitFeedback(event)">
+                        <div class="form-group">
+                            <label for="feedback-service">Service Type:</label>
+                            <select id="feedback-service" name="feedback-service" required>
+                                <option value="dog-walking">Dog Walking</option>
+                                <option value="pet-sitting">Pet Sitting</option>
+                                <option value="grooming">Grooming</option>
+                                <option value="training">Training</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedback-message">Feedback Message:</label>
+                            <textarea id="feedback-message" name="feedback-message" rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Submit Feedback">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Petopia. All rights reserved. | Designed by <a href="https://example.com" target="_blank">Your Name</a></p>
+        </div>
+    </footer>
+
+    <script>
+        function applyFilter() {
+    var filterSelect = document.getElementById("filter-select");
+    var selectedFilter = filterSelect.value;
+
+    // Hide all filter options initially
+    document.querySelector(".date-filter").classList.add("hidden");
+    document.querySelector(".service-type-filter").classList.add("hidden");
+
+    // Show the selected filter option
+    if (selectedFilter === "date") {
+        document.querySelector(".date-filter").classList.remove("hidden");
+    } else if (selectedFilter === "service-type") {
+        document.querySelector(".service-type-filter").classList.remove("hidden");
+    }
+
+    // Apply filter logic based on selected filter
+    applyFilters();
+}
+
+function applyFilters() {
+    // Implement logic to apply filters based on selected date or service type
+    var dateFilter = document.getElementById("date-filter").value;
+    var serviceTypeFilter = document.getElementById("service-type-filter").value;
+
+    // Example: Fetch appointments based on selected filters
+    console.log("Applying filters - Date:", dateFilter, "Service Type:", serviceTypeFilter);
+}
+
+function markAsCompleted() {
+    // Implement logic to mark the appointment as completed
+}
+
+function reschedule() {
+    // Implement logic to reschedule the appointment
+}
+
+function cancelAppointment() {
+    // Implement logic to cancel the appointment
+}
+
+function showMonthlyView() {
+    // Implement logic to switch to monthly calendar view
+}
+
+function showWeeklyView() {
+    // Implement logic to switch to weekly calendar view
+}
+
+function showDailyView() {
+    // Implement logic to switch to daily calendar view
+}
+
+function showListView() {
+    // Implement logic to switch to detailed list view
+}
+        // JavaScript functions for form handling and UI interactions
+        function showRegistrationForm() {
+            hideAllForms();
+            document.getElementById('registration-form').classList.remove('hidden');
+        }
+
+        function showLoginForm() {
+            hideAllForms();
+            document.getElementById('login-form').classList.remove('hidden');
+        }
+
+        function showResetPassword() {
+            hideAllForms();
+            document.getElementById('reset-password-form').classList.remove('hidden');
+        }
+
+        function cancelResetPassword() {
+            document.getElementById('reset-password-form').classList.add('hidden');
+        }
+
+        function register(event) {
+            event.preventDefault();
+            // Implement registration logic here
+            alert('Registration successful!');
+            showLoginForm(); // Show login form after registration
+        }
+
+        function login(event) {
+            event.preventDefault();
+            // Implement login logic here
+            alert('Login successful!');
+            showDashboard(); // Show dashboard after login
+        }
+
+        function showDashboard() {
+            hideAllForms();
+            document.getElementById('dashboard').classList.remove('hidden');
+        }
+
+        function logout() {
+            // Implement logout logic here
+            alert('Logged out successfully!');
+            showLoginForm(); // Show login form after logout
+        }
+
+        function resetPassword() {
+            // Implement password reset logic here
+            alert('Password reset link sent to your email!');
+            cancelResetPassword(); // Hide reset password form after sending email
+        }
+
+        function showSchedule() {
+            hideDashboardSections();
+            document.getElementById('schedule-view').classList.remove('hidden');
+        }
+
+        function showServiceRequests() {
+            hideDashboardSections();
+            document.getElementById('service-requests').classList.remove('hidden');
+        }
+
+        function showMyServices() {
+            hideDashboardSections();
+            document.getElementById('my-services').classList.remove('hidden');
+        }
+
+        function showFeedbackForm() {
+            hideDashboardSections();
+            document.getElementById('feedback-form').classList.remove('hidden');
+        }
+
+        function submitFeedback(event) {
+            event.preventDefault();
+            // Implement feedback submission logic here
+            alert('Feedback submitted successfully!');
+            showDashboard(); // Show dashboard after feedback submission
+        }
+
+        function approveRequest() {
+            // Implement request approval logic here
+            alert('Request approved!');
+        }
+        
+        function markAsCompleted() {
+            // Implement request approval logic here
+            alert('Request completed!');
+        }
+        
+        function reschedule() {
+            // Implement request approval logic here
+            alert('Request rescheduled!');
+        }
+        
+        function cancelAppointment () {
+            // Implement request approval logic here
+            alert('Request cancelled!');
+        }
+
+        function rejectRequest() {
+            // Implement request rejection logic here
+            alert('Request rejected!');
+        }
+
+        function applyFilters() {
+            // Implement filter application logic here
+            alert('Filters applied!');
+        }
+
+        function hideAllForms() {
+            document.getElementById('registration-form').classList.add('hidden');
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('reset-password-form').classList.add('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+        }
+
+        function hideDashboardSections() {
+            document.getElementById('schedule-view').classList.add('hidden');
+            document.getElementById('service-requests').classList.add('hidden');
+            document.getElementById('my-services').classList.add('hidden');
+            document.getElementById('feedback-form').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
